@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Drag/Scale/Rotate</title>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="http://threedubmedia.com/inc/js/jquery.event.drag-2.2.js"></script>
+<script src="http://threedubmedia.com/inc/js/jquery.event.drag.live-2.2.js"></script>
+<style type="text/css">
+.element {
+  position: absolute;
+  top: 200px;
+  left: 15%;
+  width: 60%;
+  height: 40%;
+  background-color: rgb(0, 195, 244);
+}
+.drag {
+  position: absolute;
+  border: 1px solid #89B;
+  background: #BCE;
+  height: 58px; width: 58px;
+  top: 120px;
+  cursor: move;
+}
+.handle {
+  position: absolute;
+}
+.rotatable {
+  cursor: move;
+  left: 50%;
+  top: -30px;
+  margin-left: -4px;
+}
+.NW, .NN, .NE {
+  top: -4px;
+}
+.NE, .EE, .SE {
+  right: -4px;
+}
+.SW, .SS, .SE {
+  bottom: -4px;
+}
+.NW, .WW, .SW {
+  left: -4px;
+}
+.SE, .NW {
+  cursor: nw-resize;
+}
+.SW, .NE {
+  cursor: ne-resize;
+}
+.NN, .SS {
+  cursor: n-resize;
+  left: 50%;
+  margin-left: -4px;
+}
+.EE, .WW {
+  cursor: e-resize;
+  top: 50%;
+  margin-top: -4px;
+}
+.selected {
+  background-color: #ECB;
+  border-color: #B98;
+}
+.selected .handle {
+  background-color: #CA9;
+  border-color: #B98;
+}
+.handle {
+  height: 10px; width: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  background: rgba(0, 0, 0, 0.5); 
+}
+.rotatable {
+  background: rgba(0, 0, 0, 0.5); 
+  border-radius: 25em;
+}
+</style>
+<script type="text/javascript">
+$(document).ready(function(){
+  var rotateable = false;
+  
+  $('.element').drag('start',function( ev, dd ){
+    dd.attr = $( ev.target ).prop("className");
+    dd.width = $( this ).width();
+    dd.height = $( this ).height();
+  }).drag(function( ev, dd ) {
+    var props = {};
+    if ( dd.attr.indexOf("E") > -1 ){
+      props.width = Math.max( 32, dd.width + dd.deltaX );
+    }
+    if ( dd.attr.indexOf("S") > -1 ){
+      props.height = Math.max( 32, dd.height + dd.deltaY );
+    }
+    if ( dd.attr.indexOf("W") > -1 ){
+      props.width = Math.max( 32, dd.width - dd.deltaX );
+      props.left = dd.originalX + dd.width - props.width;
+    }
+    if ( dd.attr.indexOf("N") > -1 ){
+      props.height = Math.max( 32, dd.height - dd.deltaY );
+      props.top = dd.originalY + dd.height - props.height;
+    }
+    if ( dd.attr.indexOf("element") > -1 ){
+      props.top = dd.offsetY;
+      props.left = dd.offsetX;
+    }
+    $( this ).css( props );
+  });
+  
+  // Rotate 360 Degrees 
+  $(".rotatable").on("mousedown touchstart", function() {
+    rotateable = 1;
+    if (rotateable) {
+      $(".element").each(function() {
+        var container = $(this),
+            body = $(document),
+            angler = container.find(".rotatable").parent();
+        
+        angler.on("mousedown touchstart", mouseDown);
+        body.on("mouseup touchend", mouseUp);
+        
+        function setAngle(value) {
+          angler.css("transform", "rotate(" + value + "deg)").change();
+        }
+        
+        function mouseDown(event) {
+          body.on("mousemove.rotatable", handleMove);
+          body.on("touchmove.rotatable", handleMove);
+          handleMove(event);
+          event.preventDefault();
+        }
+        
+        function mouseUp(event) {
+          body.off("mousemove.rotatable", handleMove);
+          body.off("touchmove.rotatable", handleMove);
+          rotateable = false;
+        }
+        
+        function handleMove(event) {
+          if (rotateable) {
+            var mouseX = event.pageX;
+            var mouseY = event.pageY;
+            
+            setAngle(0);
+            var ofs = angler.offset();
+            ofs.left += angler.height()/2;
+            ofs.top += angler.width()/2;
+            
+            var x = mouseX - ofs.left;
+            var y = mouseY - ofs.top;
+            
+            var angle = Math.atan2(x, y) * 180 / Math.PI;
+            angle = 180 - angle;
+            // strip decimal, go between 0-360
+            angle = ((angle + 360) | 0) % 360;
+            setAngle(angle);
+          }
+        }
+      }); 
+    }
+  });
+});
+</script>
+</head>
+<body>
+  <div class="element"><div class="handle rotatable"></div><div class="handle NE"></div><div class="handle NN"></div><div class="handle NW"></div><div class="handle WW"></div><div class="handle EE"></div><div class="handle SW"></div><div class="handle SS"></div><div class="handle SE"></div></div>
+</body>
+</html>
