@@ -4,7 +4,7 @@
 A simple solution to rotate an element 360 degrees. (Using Jquery+CSS3 Transform)
 
 Required Files
--------------
+--------------
 
     <link type="text/css" rel="stylesheet" href="assets/style.css"/>
     <link type="text/css" rel="stylesheet" href="assets/RotateMe.css"/>
@@ -13,7 +13,7 @@ Required Files
     
 
 Calling The Plugin
--------------
+------------------
 
     $(".element").RotateMe();
     
