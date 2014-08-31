@@ -18,3 +18,6 @@ Calling The Plugin
     $(".element").RotateMe();
     
 Demos are provided for extra assistance.
+
+If this plugin was at all helpful for you. Would you consider donating to the developer?
+https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BSYGA2RB5ZJCC
