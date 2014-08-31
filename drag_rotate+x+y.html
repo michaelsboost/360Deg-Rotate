@@ -5,35 +5,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=8">
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<link type="text/css" rel="stylesheet" href="assets/style.css"/>
+<link type="text/css" rel="stylesheet" href="assets/RotateMe.css"/>
+<script src="assets/jquery.js"></script>
 <script src="http://threedubmedia.com/inc/js/jquery.event.drag-2.2.js"></script>
 <script src="http://threedubmedia.com/inc/js/jquery.event.drag.live-2.2.js"></script>
 <style type="text/css">
-.element {
-  position: absolute;
-  top: 200px;
-  left: 15%;
-  width: 60%;
-  height: 40%;
-  background-color: rgb(0, 195, 244);
-}
-.drag {
-  position: absolute;
-  border: 1px solid #89B;
-  background: #BCE;
-  height: 58px; width: 58px;
-  top: 120px;
-  cursor: move;
-}
-.handle {
-  position: absolute;
-}
-.rotatable {
-  cursor: move;
-  left: 50%;
-  top: -30px;
-  margin-left: -4px;
-}
 .NW, .NN, .NE {
   top: -4px;
 }
@@ -61,23 +38,6 @@
   cursor: e-resize;
   top: 50%;
   margin-top: -4px;
-}
-.selected {
-  background-color: #ECB;
-  border-color: #B98;
-}
-.selected .handle {
-  background-color: #CA9;
-  border-color: #B98;
-}
-.handle {
-  height: 10px; width: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.75);
-  background: rgba(0, 0, 0, 0.5); 
-}
-.rotatable {
-  background: rgba(0, 0, 0, 0.5); 
-  border-radius: 25em;
 }
 </style>
 <script type="text/javascript">
