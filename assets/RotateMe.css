@@ -1,0 +1,14 @@
+.handle {
+  position: absolute;
+  height: 10px; width: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  background: rgba(0, 0, 0, 0.5); 
+}
+.rotatable {
+  cursor: move;
+  left: 50%;
+  top: -30px;
+  margin-left: -4px;
+  background: rgba(0, 0, 0, 0.5); 
+  border-radius: 25em;
+}
