@@ -20,7 +20,7 @@ Calling The Plugin
 
 Demos
 --------------
-**With Plugin**  
+**With plugin**  
 http://jsbin.com/zeguyipizizi/1/edit
 
 **Without plugin**  
