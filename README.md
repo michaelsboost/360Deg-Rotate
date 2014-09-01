@@ -17,6 +17,15 @@ Calling The Plugin
 
     $(".element").RotateMe();
     
+
+Demos
+--------------
+**With Plugin**  
+http://jsbin.com/zeguyipizizi/1/edit
+
+**Without plugin**  
+http://jsbin.com/dusacabobupa/1/edit
+
 Demos are provided for extra assistance.
 
 If this plugin was at all helpful for you. Would you consider donating to the developer?
