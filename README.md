@@ -21,10 +21,10 @@ Calling The Plugin
 Demos
 --------------
 **With plugin**  
-http://jsbin.com/zeguyipizizi/1/edit
+http://jsbin.com/liyaqeninuwa/1/edit
 
 **Without plugin**  
-http://jsbin.com/dusacabobupa/1/edit
+http://jsbin.com/nolihoxijife/1/edit
 
 Demos are provided for extra assistance.
 
