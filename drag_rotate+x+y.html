@@ -11,37 +11,32 @@
 <script src="http://threedubmedia.com/inc/js/jquery.event.drag-2.2.js"></script>
 <script src="http://threedubmedia.com/inc/js/jquery.event.drag.live-2.2.js"></script>
 <style type="text/css">
-.NW, .NN, .NE {
-  top: -4px;
-}
-.NE, .EE, .SE {
-  right: -4px;
-}
-.SW, .SS, .SE {
-  bottom: -4px;
-}
-.NW, .WW, .SW {
-  left: -4px;
-}
-.SE, .NW {
-  cursor: nw-resize;
-}
-.SW, .NE {
-  cursor: ne-resize;
-}
-.NN, .SS {
+.NN {
   cursor: n-resize;
   left: 50%;
-  margin-left: -4px;
+  top: 0;
 }
-.EE, .WW {
+.WW {
   cursor: e-resize;
   top: 50%;
-  margin-top: -4px;
+  left: 0;
+}
+.handleV {
+  position: absolute;
+  background: rgba(255, 0, 0, 0.75); 
+  width: 10px;
+  height: 100%;
+}
+.handleH {
+  position: absolute;
+  background: rgba(255, 250, 0, 0.75); 
+  width: 100%;
+  height: 10px;
 }
 </style>
 <script type="text/javascript">
 $(document).ready(function() {
+  $("input[type=text]").val("").change();
   var FinalizeRotation = function() {
     if (($("#rotate").val() === "") && ($("#rotateX").val() === "")) {
       $("#rotateFinal").val($("#rotateY").val());
@@ -66,16 +61,16 @@ $(document).ready(function() {
   }).drag(function( ev, dd ) {
     var props = {};
     if ( dd.attr.indexOf("E") > -1 ){
-      $("#rotateX").val("rotateX(" + Math.max( 32, ev.pageY ) + "deg)").change();
+      $("#rotateX").val("rotateY(" + Math.max( 32, ev.pageX ) + "deg)").change();
     }
     if ( dd.attr.indexOf("S") > -1 ){
-      $("#rotateY").val("rotateY(" + Math.max( 32, ev.pageX ) + "deg)").change();
+      $("#rotateY").val("rotateX(" + Math.max( 32, ev.pageY ) + "deg)").change();
     }
     if ( dd.attr.indexOf("W") > -1 ){
-      $("#rotateX").val("rotateX(" + Math.max( 32, ev.pageY ) + "deg)").change();
+      $("#rotateX").val("rotateY(" + Math.max( 32, ev.pageX ) + "deg)").change();
     }
     if ( dd.attr.indexOf("N") > -1 ){
-      $("#rotateY").val("rotateY(" + Math.max( 32, ev.pageX ) + "deg)").change();
+      $("#rotateY").val("rotateX(" + Math.max( 32, ev.pageY ) + "deg)").change();
     }
     if ( dd.attr.indexOf("element") > -1 ){
       props.top = dd.offsetY;
@@ -150,6 +145,6 @@ $(document).ready(function() {
   <input id="rotateY" class="handlerotate" placeholder="rotateY" type="text">
   <input id="rotateX" class="handlerotate" placeholder="rotateX" type="text">
   <input id="rotateFinal" placeholder="rotateFinal" type="text">
-  <div class="element"><div class="handle rotatable"></div><div class="handle NN"></div><div class="handle WW"></div><div class="handle EE"></div><div class="handle SS"></div></div>
+  <div class="element"><div class="handle rotatable"></div><div class="handleV NN"></div><div class="handleH WW"></div></div>
 </body>
 </html>
