@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Drag/Rotate/RotateX/RotateY</title>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=9" />
+<link type="text/css" rel="stylesheet" href="assets/style.css"/>
+<link type="text/css" rel="stylesheet" href="assets/RotateMe.css"/>
+<script src="assets/jquery.js"></script>
+<script src="http://threedubmedia.com/inc/js/jquery.event.drag-2.2.js"></script>
+<script src="http://threedubmedia.com/inc/js/jquery.event.drag.live-2.2.js"></script>
+<style type="text/css">
+.NN {
+  cursor: n-resize;
+  left: 50%;
+  top: 0;
+}
+.WW {
+  cursor: e-resize;
+  top: 50%;
+  left: 0;
+}
+.handleV {
+  position: absolute;
+  background: rgba(255, 0, 0, 0.75); 
+  width: 10px;
+  height: 100%;
+}
+.handleH {
+  position: absolute;
+  background: rgba(255, 250, 0, 0.75); 
+  width: 100%;
+  height: 10px;
+}
+</style>
+<script type="text/javascript">
+$(document).ready(function() {
+  $("input[type=text]").val("").change();
+  var FinalizeRotation = function() {
+    if (($("#rotate").val() === "") && ($("#rotateX").val() === "")) {
+      $("#rotateFinal").val($("#rotateY").val());
+    } else if (($("#rotate").val() === "") && ($("#rotateY").val() === "")) {
+      $("#rotateFinal").val($("#rotateX").val());
+    } else if (($("#rotateX").val() === "") && ($("#rotateY").val() === "")) {
+      $("#rotateFinal").val($("#rotate").val());
+    } else if ($("#rotate").val() === "") {
+      $("#rotateFinal").val($("#rotateX").val() + " " + $("#rotateY").val());
+    } else if ($("#rotateX").val() === "") { 
+      $("#rotateFinal").val($("#rotate").val() + " " + $("#rotateY").val());
+    } else if ($("#rotateY").val() === "") {
+      $("#rotateFinal").val($("#rotate").val() + " " + $("#rotateX").val());
+    } else {
+      $("#rotateFinal").val($("#rotate").val() + " " + $("#rotateX").val() + " " + $("#rotateY").val());
+    }
+  };
+  
+  // Handles Drag and RotateX & RotateY
+  $('.element').drag('start',function( ev, dd ){
+    dd.attr = $( ev.target ).prop("className");
+  }).drag(function( ev, dd ) {
+    var props = {};
+    if ( dd.attr.indexOf("E") > -1 ){
+      $("#rotateX").val("rotateY(" + Math.max( 32, ev.pageX ) + "deg)").change();
+    }
+    if ( dd.attr.indexOf("S") > -1 ){
+      $("#rotateY").val("rotateX(" + Math.max( 32, ev.pageY ) + "deg)").change();
+    }
+    if ( dd.attr.indexOf("W") > -1 ){
+      $("#rotateX").val("rotateY(" + Math.max( 32, ev.pageX ) + "deg)").change();
+    }
+    if ( dd.attr.indexOf("N") > -1 ){
+      $("#rotateY").val("rotateX(" + Math.max( 32, ev.pageY ) + "deg)").change();
+    }
+    if ( dd.attr.indexOf("element") > -1 ){
+      props.top = dd.offsetY;
+      props.left = dd.offsetX;
+    }
+    $( this ).css( props );
+  });
+  
+  // Rotate 360 Degrees 
+  $(".rotatable").on("mousedown touchstart", function() {
+    rotateable = 1;
+    
+    if (rotateable) {
+      $(".element").each(function() {
+        var container = $(this),
+            body = $(document),
+            angler = container.find(".rotatable").parent();
+        
+        angler.on("mousedown touchstart", mouseDown);
+        body.on("mouseup touchend", mouseUp);
+        
+        function setAngle(value) {
+          $("#rotate").val("rotate("+ value +"deg)").change();
+        }
+        
+        function mouseDown(event) {
+          body.on("mousemove.rotatable", handleMove);
+          body.on("touchmove.rotatable", handleMove);
+          handleMove(event);
+          event.preventDefault();
+        }
+        
+        function mouseUp(event) {
+          body.off("mousemove.rotatable", handleMove);
+          body.off("touchmove.rotatable", handleMove);
+          rotateable = false;
+        }
+        
+        function handleMove(event) {
+          if (rotateable) {
+            var mouseX = event.pageX;
+            var mouseY = event.pageY;
+            
+            setAngle(0);
+            var ofs = angler.offset();
+            ofs.left += angler.height()/2;
+            ofs.top += angler.width()/2;
+            
+            var x = mouseX - ofs.left;
+            var y = mouseY - ofs.top;
+            
+            var angle = Math.atan2(x, y) * 180 / Math.PI;
+            angle = 180 - angle;
+            // strip decimal, go between 0-360
+            angle = ((angle + 360) | 0) % 360;
+            setAngle(angle);
+          }
+        }
+      });
+    }
+  });
+  
+  $(".handlerotate").on('keyup change', function() {
+    FinalizeRotation();
+    $(".element").css("transform", $("#rotateFinal").val());
+  });
+});
+</script>
+</head>
+<body>
+  <input id="rotate" class="handlerotate" placeholder="rotate" type="text">
+  <input id="rotateY" class="handlerotate" placeholder="rotateY" type="text">
+  <input id="rotateX" class="handlerotate" placeholder="rotateX" type="text">
+  <input id="rotateFinal" placeholder="rotateFinal" type="text">
+  <div class="element"><div class="handle rotatable"></div><div class="handleV NN"></div><div class="handleH WW"></div></div>
+</body>
+</html>

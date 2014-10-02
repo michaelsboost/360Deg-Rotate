@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Drag/Scale/Rotate</title>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=9" />
+<link type="text/css" rel="stylesheet" href="../css/style.css"/>
+<link type="text/css" rel="stylesheet" href="../css/RotateMe.css"/>
+<link rel="stylesheet prefetch" href="http://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.css">
+<script src="../js/jquery.js"></script>
+<script src="../js/RotateMe.js"></script>
+<script src="http://threedubmedia.com/inc/js/jquery.event.drag-2.2.js"></script>
+<script src="http://threedubmedia.com/inc/js/jquery.event.drag.live-2.2.js"></script>
+<style type="text/css">
+.handle {
+  position: absolute;
+  height: 10px; width: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  background: rgba(0, 0, 0, 0.5); 
+}
+.NW, .NN, .NE {
+  top: -4px;
+}
+.NE, .EE, .SE {
+  right: -4px;
+}
+.SW, .SS, .SE {
+  bottom: -4px;
+}
+.NW, .WW, .SW {
+  left: -4px;
+}
+.SE, .NW {
+  cursor: nw-resize;
+}
+.SW, .NE {
+  cursor: ne-resize;
+}
+.NN, .SS {
+  cursor: n-resize;
+  left: 50%;
+  margin-left: -4px;
+}
+.EE, .WW {
+  cursor: e-resize;
+  top: 50%;
+  margin-top: -4px;
+}
+</style>
+<script type="text/javascript">
+$(document).ready(function() {
+  $("#drag, #rotate").prop('checked', false).on('change', function() {
+    // Drag/Resize Tool
+    if ( $("#drag").is(":checked") ) {
+      $('.element').append('<div id="toolHandles"><div class="handle NE"></div><div class="handle NN"></div><div class="handle NW"></div><div class="handle WW"></div><div class="handle EE"></div><div class="handle SW"></div><div class="handle SS"></div><div class="handle SE"></div></div>').drag('start',function( ev, dd ){
+        dd.attr = $( ev.target ).prop("className");
+        dd.width = $( this ).width();
+        dd.height = $( this ).height();
+      }).drag(function( ev, dd ) {
+        var props = {};
+        if ( dd.attr.indexOf("E") > -1 ){
+          props.width = Math.max( 32, dd.width + dd.deltaX );
+        }
+        if ( dd.attr.indexOf("S") > -1 ){
+          props.height = Math.max( 32, dd.height + dd.deltaY );
+        }
+        if ( dd.attr.indexOf("W") > -1 ){
+          props.width = Math.max( 32, dd.width - dd.deltaX );
+          props.left = dd.originalX + dd.width - props.width;
+        }
+        if ( dd.attr.indexOf("N") > -1 ){
+          props.height = Math.max( 32, dd.height - dd.deltaY );
+          props.top = dd.originalY + dd.height - props.height;
+        }
+        if ( dd.attr.indexOf("element") > -1 ){
+          props.top = dd.offsetY;
+          props.left = dd.offsetX;
+        }
+        $( this ).css( props );
+      });
+    } else {
+      $('#toolHandles').remove();
+    }
+
+    // Rotate Tool
+    if ( $("#rotate").is(":checked") ) {
+      // Rotate 360 Degrees 
+      $(".element").RotateMe();
+    } else {
+      $(".rotatable").remove();
+    }
+  });
+});
+</script>
+</head>
+<body>
+  <div align="center">
+    <input id="drag" type="radio" name="tools"> <label for="drag">Drag</label>
+    <input id="rotate" type="radio" name="tools"> <label for="rotate">Rotate</label>
+  </div>
+  <div class="element"></div>
+</body>
+</html>

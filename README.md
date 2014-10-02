@@ -1,14 +1,15 @@
 360Deg-Rotate
 =============
 
-A simple solution to rotate an element 360 degrees. (Using Jquery+CSS3 Transform)
+A simple solution to rotate an element 360 degrees. (Using JQuery+CSS3 Transform)
 
 Required Files
 --------------
 
-    <link type="text/css" rel="stylesheet" href="assets/RotateMe.css"/>
-    <script src="assets/jquery.js"></script>
-    <script src="assets/RotateMe.js"></script>
+    <link type="text/css" rel="stylesheet" href="css/RotateMe.css"/>
+    <link rel="stylesheet prefetch" href="http://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/RotateMe.js"></script>
     
 
 Calling The Plugin
@@ -20,10 +21,10 @@ Calling The Plugin
 Demos
 --------------
 **With plugin**  
-http://jsbin.com/liyaqeninuwa/1/edit
+http://jsbin.com/puroyodufufo/1/edit
 
 **Without plugin**  
-http://jsbin.com/nolihoxijife/1/edit
+http://jsbin.com/qavetawerede/1/edit
 
 Demos are provided for extra assistance.
 

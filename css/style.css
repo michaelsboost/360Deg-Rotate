@@ -1,0 +1,18 @@
+@import url("normalize.css");
+
+body {
+  background: #004987;
+  /* background: rgb(0, 73, 135); */
+  font: 16px arial;
+  color: #fff;
+}
+
+.element {
+  position: absolute;
+  top: 30%;
+  left: 30%;
+  width: 40%;
+  height: 40%;
+  background: #00C3F4;
+  /* background: rgb(0, 195, 244); */
+}
