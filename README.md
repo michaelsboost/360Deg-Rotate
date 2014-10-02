@@ -24,7 +24,7 @@ Demos
 http://jsbin.com/puroyodufufo/1/edit
 
 **Without plugin**  
-http://jsbin.com/qavetawerede/1/edit
+http://jsbin.com/qoyiqevimini/1/edit
 
 Demos are provided for extra assistance.
 
